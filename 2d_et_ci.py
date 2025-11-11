@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-
 def two_var_et_ci(data, alpha, nr_of_axes):
     axes = np.arange(0, np.pi, np.pi/nr_of_axes)
     new_data = np.array(data)
