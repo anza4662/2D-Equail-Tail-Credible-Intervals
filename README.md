@@ -37,7 +37,6 @@ choosing the set of all axes that intersect the origin would be a wise choice si
 ```python
 import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
 
 def two_var_et_ci(data, alpha, nr_of_axes):
     axes = np.arange(0, np.pi, np.pi/nr_of_axes)
@@ -54,8 +53,8 @@ def two_var_et_ci(data, alpha, nr_of_axes):
         sorted_rotated_new_data = np.reshape(sorted(rotated_new_data, key = lambda x: x[0]), [len(rotated_new_data), 2])
         sorted_rotated_new_data = np.delete(sorted_rotated_new_data, (0,-1), axis = 0)
 
-        inverse_rotation_matrix = np.array([[-np.cos(axis), np.sin(axis)],
-                                            [-np.sin(axis), -np.cos(axis)]])
+        inverse_rotation_matrix = np.array([[np.cos(axis), np.sin(axis)],
+                                            [-np.sin(axis), np.cos(axis)]])
         new_data = np.transpose(np.matmul(inverse_rotation_matrix, np.transpose(sorted_rotated_new_data)))
 
     return pd.DataFrame(data = new_data, columns = ["x1", "x2"])

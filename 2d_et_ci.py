@@ -17,23 +17,21 @@ def two_var_et_ci(data, alpha, nr_of_axes):
         sorted_rotated_new_data = np.reshape(sorted(rotated_new_data, key = lambda x: x[0]), [len(rotated_new_data), 2])
         sorted_rotated_new_data = np.delete(sorted_rotated_new_data, (0,-1), axis = 0)
 
-        inverse_rotation_matrix = np.array([[-np.cos(axis), np.sin(axis)],
-                                            [-np.sin(axis), -np.cos(axis)]])
+        inverse_rotation_matrix = np.array([[np.cos(axis), np.sin(axis)],
+                                            [-np.sin(axis), np.cos(axis)]])
         new_data = np.transpose(np.matmul(inverse_rotation_matrix, np.transpose(sorted_rotated_new_data)))
 
     return pd.DataFrame(data = new_data, columns = ["x1", "x2"])
 
 
 def main():
-    data = pd.read_csv('posterior_data.csv')
+    data = pd.read_csv('posterior_mock_data.csv')
 
-    plt.plot(data["ext_pois.N"], data["ext_pois.theta"], "bo")
-    plt.title('Full posterior')
-    plt.show()
+    plt.plot(data.iloc[:,0], data.iloc[:,1], "bo")
 
-    result = two_var_et_ci(data, alpha = 0.5, nr_of_axes = 2)
+    result = two_var_et_ci(data, alpha = 0.2, nr_of_axes = 50)
 
-    plt.plot(result["x1"], result["x2"], "bo")
+    plt.plot(result["x1"], result["x2"], "ro", alpha = 0.4)
     plt.title('Equal-tail credible interval')
     plt.show()
 
